@@ -3,7 +3,6 @@ package oauth1
 import (
 	"bytes"
 	"crypto/rand"
-	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -130,9 +129,9 @@ func (a *auther) nonce() string {
 	if a.noncer != nil {
 		return a.noncer.Nonce()
 	}
-	b := make([]byte, 32)
+	b := make([]byte, 16)
 	rand.Read(b)
-	return base64.StdEncoding.EncodeToString(b)
+	return fmt.Sprintf("%x", b)
 }
 
 // Returns the Unix epoch seconds.
